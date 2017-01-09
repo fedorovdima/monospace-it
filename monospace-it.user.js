@@ -79,8 +79,10 @@ function monospaceSelected() {
     
         var spanAroundSelection = document.createElement("span");
         spanAroundSelection.setAttribute ('id', 'monoselect');
-        var selection = getSelection().getRangeAt(0);
-        selection.surroundContents(spanAroundSelection);
+        var selection = getSelection();
+        var range = selection.getRangeAt(0);
+        range.setStart(selection.anchorNode, 0); // extend range to the beginning of anchorNode to include leading whitespaces
+        range.surroundContents(spanAroundSelection);
         return spanAroundSelection.innerHTML;
     } catch (e) {
         if (window.ActiveXObject) {
